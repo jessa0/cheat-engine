@@ -1,0 +1,28 @@
+name: build
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: sxmxta/lazarus@v1.0.18
+        with:
+          lazarus-version: "2.2.2"
+      - run: |
+          lazbuild --build-mode="Release 64-Bit" "Cheat Engine\cheatengine.lpi"
+          #lazbuild "Cheat Engine\launcher\cheatengine.lpi"
+          #lazbuild "Cheat Engine\speedhack\speedhack.lpi"
+          #lazbuild "Cheat Engine\luaclient\luaclient.lpi"
+          #lazbuild "Cheat Engine\VEHDebug\vehdebug.lpi"
+
+          #lazbuild "Cheat Engine\cecore.lpi"
+          #lazbuild "Cheat Engine\cepack\cepack.lpi"
+
+          #lazbuild "Cheat Engine\dbk32\Kernelmodule unloader\Kernelmoduleunloader.lpi"
+          #lazbuild "Cheat Engine\plugin\DebugEventLog\src\DebugEventLog.lpi"
+          #lazbuild "Cheat Engine\plugin\forcedinjection\forcedinjection.lpi"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cheatengine.zip
+          path: "Cheat Engine\\bin"
